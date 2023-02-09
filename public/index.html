@@ -1,28 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
-
-    <h1 id="h1">Hello world</h1>
+  </head>
+  <body>
+    <button id="enBtn">En</button>
+    <button id="noBtn">No</button>
+    <p id="ChosenLanguage">En</p>
+    <h1 id="h1"></h1>
 
     <script>
+      let h1 = document.getElementById("h1");
+      let enBtn = document.getElementById("enBtn");
+      let noBtn = document.getElementById("noBtn");
+      let ChosenLanguage = document.getElementById("ChosenLanguage");
 
-        let h1 = document.getElementById("h1");
+      (async function () {
+        // let data = await fetch("/getJokeNo");
+        // let joke = await data.json();
+        // console.log(joke);
+        // h1.innerHTML = joke.joke;
+        // localStorage.setItem("Joke", JSON.stringify(joke));
+        serverResponse("En");
+      })();
 
-        (async function () {
-            let data = await fetch("/getJoke")
-            let joke = await data.json()
-            console.log(joke);
-            h1.innerHTML = joke.joke
-        })();
+      enBtn.addEventListener("click", () => {
+        serverResponse("En");
+      });
 
+      noBtn.addEventListener("click", () => {
+        serverResponse("No");
+      });
 
+      async function serverResponse(lang) {
+        let data = await fetch(`/getJoke${lang}`);
+        let joke = await data.json();
+        h1.innerHTML = joke.joke;
+        localStorage.setItem("Joke", JSON.stringify(joke));
+      }
     </script>
-    
-</body>
+  </body>
 </html>
