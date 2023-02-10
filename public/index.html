@@ -7,6 +7,7 @@
     <title>Document</title>
   </head>
   <body>
+    <button id="newBtn">New Joke</button>
     <button id="enBtn">En</button>
     <button id="noBtn">No</button>
     <p id="ChosenLanguage">En</p>
@@ -14,32 +15,59 @@
 
     <script>
       let h1 = document.getElementById("h1");
+      let newBtn = document.getElementById("newBtn");
       let enBtn = document.getElementById("enBtn");
       let noBtn = document.getElementById("noBtn");
       let ChosenLanguage = document.getElementById("ChosenLanguage");
+      let language = "En";
+      let index = -1;
+      let elmDick;
 
       (async function () {
-        // let data = await fetch("/getJokeNo");
-        // let joke = await data.json();
-        // console.log(joke);
-        // h1.innerHTML = joke.joke;
-        // localStorage.setItem("Joke", JSON.stringify(joke));
         serverResponse("En");
       })();
 
-      enBtn.addEventListener("click", () => {
-        serverResponse("En");
+      newBtn.addEventListener("click", () => {
+        index = -1;
+        serverResponse(language);
       });
 
-      noBtn.addEventListener("click", () => {
-        serverResponse("No");
+      enBtn.addEventListener("click", async () => {
+        await serverResponse("En");
+        language = "En";
+        elementLanguage();
+      });
+
+      noBtn.addEventListener("click", async () => {
+        await serverResponse("No");
+        language = "No";
+        elementLanguage();
       });
 
       async function serverResponse(lang) {
-        let data = await fetch(`/getJoke${lang}`);
+        let data = await fetch(`/getJoke${lang}/${index}`);
         let joke = await data.json();
-        h1.innerHTML = joke.joke;
-        localStorage.setItem("Joke", JSON.stringify(joke));
+        h1.innerHTML = joke.joke[0];
+        index = joke.joke[1];
+        elmDick = joke.elements;
+        //localStorage.setItem("Joke", JSON.stringify(joke));
+      }
+
+      function elementLanguage() {
+        //console.log(elmDick);
+        let elm = document.querySelectorAll("body > *");
+        // console.log(elm);
+
+            for (const el of elm) {
+              //console.log(elmDick.newBtn);
+              let id = el.id;
+              for (const [key, value] of Object.entries(elmDick)) {
+                if (key === id) {
+                  el.innerHTML = value;
+                }
+                
+              }
+            }
       }
     </script>
   </body>
