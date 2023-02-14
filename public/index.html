@@ -50,24 +50,19 @@
         h1.innerHTML = joke.joke[0];
         index = joke.joke[1];
         elmDick = joke.elements;
-        //localStorage.setItem("Joke", JSON.stringify(joke));
       }
 
       function elementLanguage() {
-        //console.log(elmDick);
         let elm = document.querySelectorAll("body > *");
-        // console.log(elm);
 
-            for (const el of elm) {
-              //console.log(elmDick.newBtn);
-              let id = el.id;
-              for (const [key, value] of Object.entries(elmDick)) {
-                if (key === id) {
-                  el.innerHTML = value;
-                }
-                
-              }
+        for (const el of elm) {
+          let id = el.id;
+          for (const [key, value] of Object.entries(elmDick)) {
+            if (key === id) {
+              el.innerHTML = value;
             }
+          }
+        }
       }
     </script>
   </body>
