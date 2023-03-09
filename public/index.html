@@ -4,16 +4,75 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css">
     <title>Document</title>
   </head>
   <body>
-    <button id="newBtn">New Joke</button>
+    <div id="home">
+      <label for="username">User Name</label>
+      <input id="username" type="text" />
+      <br />
+      <label for="password">Password</label>
+      <input id="password" type="password" />
+      <br />
+      <button id="loginBtn">Login</button>
+      <br />
+      <p id="register">Register</p>
+    </div>
+
+    <template id="registerDash">
+      <label for="registerUsername">Create user name:</label>
+      <input id="registerUsername" type="text" />
+      <br />
+      <label for="registerPassword">Create password:</label>
+      <input id="registerPassword" type="password" />
+      <br />
+      <button id="registerBtn">Create user</button>
+    </template>
+
+    <template id="dashboard">
+      <h1 id="h1">Welcome</h1>
+      <button id="profile">Profile</button>
+      <button id="highscore">Highscore</button>
+      <button id="game">Game</button>
+    </template>
+
+    <template id="profileDash">
+      <h1 id="userName">Profile</h1>
+      <img src="" alt="" />
+      <ol>
+        <li>score1</li>
+        <li>score2</li>
+        <li>score3</li>
+      </ol>
+    </template>
+
+    <template id="highscoreDash">
+      <h1 id="h1">Highscore</h1>
+      <ol>
+        <li>score1</li>
+        <li>score2</li>
+        <li>score3</li>
+      </ol>
+    </template>
+
+    <template id="gameDash">
+      <h1 id="h1">Game</h1>
+
+      <div id="board"></div>
+      <div id="puzzlePieces"></div>
+      
+    </template>
+
+    <script src="./script.js"></script>
+
+    <!-- <button id="newBtn">New Joke</button>
     <button id="enBtn">En</button>
     <button id="noBtn">No</button>
     <p id="ChosenLanguage">En</p>
-    <h1 id="h1"></h1>
+    <h1 id="h1"></h1> -->
 
-    <script>
+    <!-- <script>
       let h1 = document.getElementById("h1");
       let newBtn = document.getElementById("newBtn");
       let enBtn = document.getElementById("enBtn");
@@ -64,6 +123,6 @@
           }
         }
       }
-    </script>
+    </script> -->
   </body>
 </html>
