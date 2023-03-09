@@ -3,8 +3,7 @@ let username = document.getElementById("username");
 let password = document.getElementById("password");
 let loginBtn = document.getElementById("loginBtn");
 let register = document.getElementById("register");
-let rob = new Image;
-rob.src = "/Images/robocop.jpg";
+
 
 loginBtn.addEventListener(`click`, async () => {
   let data = await fetch("/login", {
