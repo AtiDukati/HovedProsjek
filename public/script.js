@@ -1,8 +1,11 @@
+import createPuzzlepieces from "./image.mjs"
+
 let home = document.getElementById("home");
 let username = document.getElementById("username");
 let password = document.getElementById("password");
 let loginBtn = document.getElementById("loginBtn");
 let register = document.getElementById("register");
+
 
 
 loginBtn.addEventListener(`click`, async () => {
@@ -37,6 +40,7 @@ function dashBoard() {
 
   document.getElementById("game").addEventListener("click", () => {
     createDashboard("gameDash");
+    createPuzzlepieces()
   });
 }
 

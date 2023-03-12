@@ -1,16 +1,52 @@
 
-#board {
-    width: 100px;
-    height: 100px;
-    border: 5px black solid;
-    background-color: red;
+#gameSection {
+    /* margin: auto;
+    width: 100px; */
+    
+    
+    display: grid;
+    grid-template-columns: auto auto;
+    column-gap: 50px;
+    justify-content: center;
+}
 
+ #board {
+    
+    /* width: 476px;
+    height: 755px;
+    border: 2px black solid;
+    background-color: red; */
+
+    margin-top: 2px;
+    width: 475px;
+    height: 758px;
+    border: 1px black solid;
+
+}
+
+#board > img {
+    /* width: 50px;
+    height: 50px;  */
+    margin-top: -2px;
+    margin-bottom: -2px;
+    /* border: gray 0.5px solid; */
 }
 
 #puzzlePieces{
-    width: 100px;
-    height: 100px;
-    border: 5px black solid;
-    background-color: green;
+    margin-top: 2px;
+     width: 600px;
+    height: inherit;
+    /* border: 2px black solid; */
 
 }
+
+#puzzlePieces > img {
+    /* width: 50px;
+    height: 50px;  */
+    /* margin-top: -1px;
+    margin-bottom: -1px; */
+    margin: 2px;
+    /* border: gray 0.5px solid; */
+}
+
+
