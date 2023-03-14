@@ -88,7 +88,10 @@ blankImagePeaces.forEach(element => {
 
 function actions(elm) {
     elm.addEventListener("dragstart", (e)=>{ //click on image to drag
+
         currTile = e.target;
+
+     
         console.log(currTile);
     }); 
     elm.addEventListener("dragover", (e)=>{ //drag an image
@@ -101,11 +104,15 @@ function actions(elm) {
         
     }); 
     elm.addEventListener("drop", (e)=>{ //drop an image onto another one
-        //console.log(e.target)
         otherTile = e.target
-        // currTile.id = otherTile.id;
-        otherTile.id = currTile.id;
-        currTile.id = otherTile.id;
+        let temp = otherTile.id
+        
+        otherTile.id = currTile.id
+        
+        currTile.id = temp
+        
+        
+
         console.log(otherTile);
 
         console.log("drop");
