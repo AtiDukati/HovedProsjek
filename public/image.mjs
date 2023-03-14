@@ -1,12 +1,10 @@
+let currTile;
+let otherTile;
 
+let imagePeaces = [];
+let blankImagePeaces = [];
 
-function createPuzzlepieces(params) {
-
-    let currTile;
-    let otherTile;
-
-    let imagePeaces = [];
-    let blankImagePeaces = [];
+function createPuzzlepieces() {
 
 // create an image object for the original image
 const originalImage = new Image();
@@ -47,7 +45,7 @@ ctx.drawImage(originalImage, x, y, tileSize, tileSize, 0, 0, tileSize, tileSize)
 // create a new img element for the tile
 const tileImage = new Image();
 tileImage.src = canvas.toDataURL();
-tileImage.id = id;
+tileImage.id = `img ${id}`;
 
 
 // add the tile to the page
@@ -64,7 +62,7 @@ ctx.fillRect(0,0,tileSize,tileSize)
 
 const tileEmptyImage = new Image();
 tileEmptyImage.src = canvas.toDataURL();
-tileEmptyImage.id = id;
+tileEmptyImage.id = `blank ${id}`;
 //board.appendChild(tileEmptyImage);
     
 actions(tileEmptyImage);
@@ -90,8 +88,8 @@ blankImagePeaces.forEach(element => {
 
 function actions(elm) {
     elm.addEventListener("dragstart", (e)=>{ //click on image to drag
-        // currTile = this;
-        console.log(e.target);
+        currTile = e.target;
+        console.log(currTile);
     }); 
     elm.addEventListener("dragover", (e)=>{ //drag an image
         e.preventDefault();
@@ -102,14 +100,24 @@ function actions(elm) {
     elm.addEventListener("dragleave", ()=>{ //dragging an image away from another one
         
     }); 
-    elm.addEventListener("drop", ()=>{ //drop an image onto another one
-        //otherTile = this;
+    elm.addEventListener("drop", (e)=>{ //drop an image onto another one
+        //console.log(e.target)
+        otherTile = e.target
+        // currTile.id = otherTile.id;
+        otherTile.id = currTile.id;
+        currTile.id = otherTile.id;
+        console.log(otherTile);
+
+        console.log("drop");
     });       
     elm.addEventListener("dragend", ()=>{ //after you completed dragDrop
-        // let currImg = currTile.src;
-        // let otherImg = otherTile.src;
-        // currTile.src = otherImg;
-        // otherTile.src = currImg;
+        let currImg = currTile.src;
+        let otherImg = otherTile.src;
+        currTile.src = otherImg;
+        otherTile.src = currImg;
+        
+
+        //console.log("hei");
     
     });
 }
