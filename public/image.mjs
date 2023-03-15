@@ -1,3 +1,4 @@
+
 let currTile;
 let otherTile;
 
@@ -5,6 +6,15 @@ let imagePeaces = [];
 let blankImagePeaces = [];
 
 function createPuzzlepieces() {
+// function timer(params) {
+//     const d = new Date();
+
+//     document.getElementById(params).innerHTML = d.toLocaleTimeString();
+// }
+   
+//     setInterval(timer("timer"), 1000)
+    // setInterval(time.innerHTML = new Date().toLocaleTimeString(), 1000)
+    
 
 // create an image object for the original image
 const originalImage = new Image();
@@ -81,52 +91,100 @@ blankImagePeaces.forEach(element => {
     board.appendChild(element)
 });
 
+console.log(imagePeaces);
 };
+
 
 }
 
 
 function actions(elm) {
     elm.addEventListener("dragstart", (e)=>{ //click on image to drag
-
         currTile = e.target;
-
-     
-        console.log(currTile);
     }); 
+
     elm.addEventListener("dragover", (e)=>{ //drag an image
         e.preventDefault();
-    });   
-    elm.addEventListener("dragenter", (e)=>{ //dragging an image into another one
-        e.preventDefault();
-    }); 
-    elm.addEventListener("dragleave", ()=>{ //dragging an image away from another one
         
+    });
+
+    elm.addEventListener("mouseover", (e)=>{
+        //e.preventDefault();
+        if (e.target.id.includes("blank")) {
+            e.target.draggable = false
+        }
+    });
+
+    elm.addEventListener("mouseout", (e)=>{
+        //e.preventDefault();
+        e.target.draggable = true;
     }); 
+    // elm.addEventListener("dragenter", (e)=>{ //dragging an image into another one
+    //     e.preventDefault();
+    // }); 
+    // elm.addEventListener("dragleave", ()=>{ //dragging an image away from another one
+        
+    // }); 
     elm.addEventListener("drop", (e)=>{ //drop an image onto another one
         otherTile = e.target
         let temp = otherTile.id
         
         otherTile.id = currTile.id
         
-        currTile.id = temp
+        currTile.id = temp;
+        gameStatusCheck();
         
-        
-
-        console.log(otherTile);
-
-        console.log("drop");
     });       
+
     elm.addEventListener("dragend", ()=>{ //after you completed dragDrop
         let currImg = currTile.src;
         let otherImg = otherTile.src;
         currTile.src = otherImg;
         otherTile.src = currImg;
-        
-
-        //console.log("hei");
+        console.log("dragend");
     
     });
 }
+
+function gameStatusCheck(params) {
+
+    const tempArr = [];
+
+
+
+    blankImagePeaces.forEach((e)=>{
+
+        if (e.id.includes("img")) {
+            tempArr.push(parseInt( e.id.substr(-2, 2)));
+        }else{
+            return;
+        }
+        
+        
+    });
+
+    if (tempArr.length === 40 && checkIfSorted(tempArr)){
+        console.log("you won");
+    }else{
+        console.log("not yet");
+    }
+
+    console.log(tempArr);
+
+    
+    
+}
+
+function checkIfSorted(arr) {
+
+        for (let i = 1; i <= arr.length; i++) {
+
+           if (arr[i] - arr[i-1] < 0) {
+            return false;
+           } 
+        }
+        return true;
+        
+    }
 
 export default createPuzzlepieces

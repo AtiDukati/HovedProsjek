@@ -8,55 +8,23 @@
   </head>
 
   
+<h2>JavaScript Timing</h2>
 
+    <p>A script on this page starts this clock:</p>
+    
+    <p id="demo"></p>
   
 
   <body>
+    
+    
     <script>
-
-//javascript
-// create an image object for the original image
-var originalImage = new Image();
-originalImage.src = './public/Images/robocop.jpg';
-
-// wait for the original image to load
-originalImage.onload = function() {
-// set the size of each tile
-var tileSize = 100;
-
-// get the dimensions of the original image
-var imageWidth = originalImage.width;
-var imageHeight = originalImage.height;
-
-// calculate the number of rows and columns of tiles needed
-var numRows = Math.ceil(imageHeight / tileSize);
-var numCols = Math.ceil(imageWidth / tileSize);
-
-// create a canvas element to draw the tiles
-var canvas = document.createElement('canvas');
-canvas.width = tileSize;
-canvas.height = tileSize;
-
-// loop through each row and column of tiles
-for(var row = 0; row < numRows; row++) {
-for(var col = 0; col < numCols; col++) {
-// get the position of the current tile
-var x = col * tileSize;
-var y = row * tileSize;
-
-// draw the current tile onto the canvas
-var context = canvas.getContext('2d');
-context.drawImage(originalImage, x, y, tileSize, tileSize, 0, 0, tileSize, tileSize);
-
-// create a new img element for the tile
-var tileImage = new Image();
-tileImage.src = canvas.toDataURL();
-
-// add the tile to the page
-document.body.appendChild(tileImage);
-}
-}
-};
+    setInterval(myTimer, 1000);
+    
+    function myTimer() {
+      const d = new Date();
+      document.getElementById("demo").innerHTML = d.toLocaleTimeString();
+    }
     </script>
   </body>
 </html>

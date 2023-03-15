@@ -6,6 +6,15 @@ let password = document.getElementById("password");
 let loginBtn = document.getElementById("loginBtn");
 let register = document.getElementById("register");
 
+let sec = 55;
+let min = 0;
+
+//testing
+// window.addEventListener("load", ()=>{
+//   createDashboard("gameDash");
+//     createPuzzlepieces()
+// });
+
 
 
 loginBtn.addEventListener(`click`, async () => {
@@ -40,7 +49,9 @@ function dashBoard() {
 
   document.getElementById("game").addEventListener("click", () => {
     createDashboard("gameDash");
-    createPuzzlepieces()
+    createPuzzlepieces();
+    setInterval(myTimer, 1000);
+
   });
 }
 
@@ -55,3 +66,19 @@ function createDashboard(dash) {
   home.appendChild(clone);
   console.log(dash);
 }
+
+      function myTimer() {
+        
+
+        if (sec%60 == 0) {
+          min++
+          sec = 0;
+        }
+        
+        document.getElementById("timer").innerHTML = `Time: 0${min}: ${sec}`;
+
+        sec++
+      };
+
+
+        

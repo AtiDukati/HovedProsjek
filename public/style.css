@@ -18,25 +18,29 @@
     background-color: red; */
 
     margin-top: 2px;
-    width: 475px;
-    height: 758px;
-    border: 1px black solid;
+    width: 486px;
+    height: 778px;
+    /* border: 1px black solid; */
 
 }
 
 #board > img {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
     /* width: 50px;
     height: 50px;  */
     margin-top: -2px;
     margin-bottom: -2px;
     /* border: gray 0.5px solid; */
+    border: 0.1px lightblue solid;
 }
 
 #puzzlePieces{
     margin-top: 2px;
-     width: 600px;
+     width: 594px;
     height: inherit;
-    /* border: 2px black solid; */
+    border: 2px black solid;
 
 }
 
@@ -50,7 +54,7 @@
 }
 
 #home * img[id*='blank']{
-    pointer-events: dragable;
+    /* pointer-events: none; */
 }
 
 
