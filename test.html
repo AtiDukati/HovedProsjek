@@ -7,24 +7,33 @@
     <title>Document</title>
   </head>
 
-  
-<h2>JavaScript Timing</h2>
+  <h2>JavaScript Timing</h2>
 
-    <p>A script on this page starts this clock:</p>
-    
-    <p id="demo"></p>
-  
+  <p>A script on this page starts this clock:</p>
+
+  <p id="demo"></p>
+
+  <button id="btn">click me</button>
 
   <body>
-    
-    
     <script>
-    setInterval(myTimer, 1000);
-    
-    function myTimer() {
-      const d = new Date();
-      document.getElementById("demo").innerHTML = d.toLocaleTimeString();
-    }
+      //myTimer()
+
+      let id = setInterval(startStopTime, 1000);
+      
+        
+      
+
+      function startStopTime() {
+        const d = new Date();
+        document.getElementById("demo").innerHTML = d.toLocaleTimeString();
+
+        let btn = document.getElementById("btn");
+        btn.addEventListener("click", () => {
+          clearInterval(id);
+          console.log("hei");
+        });
+      }
     </script>
   </body>
 </html>

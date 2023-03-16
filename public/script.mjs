@@ -6,13 +6,11 @@ let password = document.getElementById("password");
 let loginBtn = document.getElementById("loginBtn");
 let register = document.getElementById("register");
 
-let sec = 55;
-let min = 0;
-
 //testing
 // window.addEventListener("load", ()=>{
 //   createDashboard("gameDash");
-//     createPuzzlepieces()
+//     createPuzzlepieces();
+//     setInterval(myTimer, 1000);
 // });
 
 
@@ -50,7 +48,7 @@ function dashBoard() {
   document.getElementById("game").addEventListener("click", () => {
     createDashboard("gameDash");
     createPuzzlepieces();
-    setInterval(myTimer, 1000);
+    //setInterval(myTimer, 1000);
 
   });
 }
@@ -65,20 +63,7 @@ function createDashboard(dash) {
   const clone = dashboardTemplate.content.cloneNode(true);
   home.appendChild(clone);
   console.log(dash);
-}
+};
 
-      function myTimer() {
-        
-
-        if (sec%60 == 0) {
-          min++
-          sec = 0;
-        }
-        
-        document.getElementById("timer").innerHTML = `Time: 0${min}: ${sec}`;
-
-        sec++
-      };
-
-
+export {createDashboard}
         

@@ -1,39 +1,45 @@
+import {createDashboard} from "./script.mjs"
+
+
 
 let currTile;
 let otherTile;
 
 let imagePeaces = [];
 let blankImagePeaces = [];
+// const numberOfPieces = 40;
+
+let finish = false;
+
+
 
 function createPuzzlepieces() {
-// function timer(params) {
-//     const d = new Date();
 
-//     document.getElementById(params).innerHTML = d.toLocaleTimeString();
-// }
-   
-//     setInterval(timer("timer"), 1000)
-    // setInterval(time.innerHTML = new Date().toLocaleTimeString(), 1000)
+
+myTimer();
+    
+    
     
 
 // create an image object for the original image
 const originalImage = new Image();
 originalImage.src = './Images/robocop.jpg';
 
-const numberOfPieces = 40;
+
 
 // wait for the original image to load
 originalImage.onload = function() {
-// set the size of each tile
-const tileSize = originalImage.width/(numberOfPieces/8);
+    
 
-// get the dimensions of the original image
-const imageWidth = originalImage.width;
-const imageHeight = originalImage.height;
+// set the size of each tile
+const tileSize = originalImage.width/2;
+
 
 // calculate the number of rows and columns of tiles needed
-const numRows = imageHeight / tileSize;
-const numCols = imageWidth / tileSize;
+const numRows = originalImage.height / tileSize;
+const numCols = originalImage.width / tileSize;
+
+
 
 // create a canvas element to draw the tiles
 const canvas = document.createElement('canvas');
@@ -95,6 +101,7 @@ console.log(imagePeaces);
 };
 
 
+
 }
 
 
@@ -144,6 +151,8 @@ function actions(elm) {
         console.log("dragend");
     
     });
+
+    
 }
 
 function gameStatusCheck(params) {
@@ -163,19 +172,23 @@ function gameStatusCheck(params) {
         
     });
 
-    if (tempArr.length === 40 && checkIfSorted(tempArr)){
+    if (tempArr.length === 8 && checkIfSorted(tempArr)){
         console.log("you won");
+        finish = true;
+        
+        createDashboard("winTemplate");
+
     }else{
         console.log("not yet");
+        
     }
 
     console.log(tempArr);
-
-    
     
 }
 
 function checkIfSorted(arr) {
+    
 
         for (let i = 1; i <= arr.length; i++) {
 
@@ -186,5 +199,42 @@ function checkIfSorted(arr) {
         return true;
         
     }
+
+    
+
+      function myTimer() {
+        let sec = 0;
+        let min = 0;
+        
+        let timer = setInterval(start,1000);
+        
+    
+        function start() {
+            if (finish === true) {
+                clearInterval(timer)
+            }else{
+                document.getElementById("timer").innerHTML = `Time: 0${min}: ${sec}`;
+    
+                if (sec%60 == 0) {
+                    min++;
+                    sec = 0
+                }
+                sec++
+            }
+        }
+        
+    
+            // sec++
+            // if (sec%60 == 0) {
+            //     min++
+            //     sec = 0;
+            //   }else{
+                
+            //   }
+    
+        
+    
+      };
+
 
 export default createPuzzlepieces
