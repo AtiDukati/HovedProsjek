@@ -5,6 +5,8 @@ let username = document.getElementById("username");
 let password = document.getElementById("password");
 let loginBtn = document.getElementById("loginBtn");
 let register = document.getElementById("register");
+let test = document.getElementById("test");
+
 
 //testing
 // window.addEventListener("load", ()=>{
@@ -34,6 +36,26 @@ loginBtn.addEventListener(`click`, async () => {
   console.log(data.status);
 });
 
+
+test.addEventListener("click",async ()=>{
+
+  let response = await fetch("/getProfile", {
+    method: "GET",
+    headers: {
+      "content-type": "application/json",
+    }
+  });
+  let data = await response.json();
+  //let tester = JSON.parse(data)
+  let tester = data
+
+console.log(JSON.stringify(tester));
+
+});
+
+
+
+
 function dashBoard() {
   createDashboard("dashboard");
 
@@ -48,7 +70,6 @@ function dashBoard() {
   document.getElementById("game").addEventListener("click", () => {
     createDashboard("gameDash");
     createPuzzlepieces();
-    //setInterval(myTimer, 1000);
 
   });
 }

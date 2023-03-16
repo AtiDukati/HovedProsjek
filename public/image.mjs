@@ -10,16 +10,13 @@ let blankImagePeaces = [];
 // const numberOfPieces = 40;
 
 let finish = false;
+let finishTime = "";
 
 
 
 function createPuzzlepieces() {
 
-
 myTimer();
-    
-    
-    
 
 // create an image object for the original image
 const originalImage = new Image();
@@ -176,7 +173,9 @@ function gameStatusCheck(params) {
         console.log("you won");
         finish = true;
         
-        createDashboard("winTemplate");
+        createDashboard("gameFinish");
+
+        
 
     }else{
         console.log("not yet");
@@ -196,6 +195,7 @@ function checkIfSorted(arr) {
             return false;
            } 
         }
+
         return true;
         
     }
@@ -203,18 +203,18 @@ function checkIfSorted(arr) {
     
 
       function myTimer() {
-        let sec = 0;
+        let sec = 1;
         let min = 0;
         
         let timer = setInterval(start,1000);
-        
-    
         function start() {
             if (finish === true) {
                 clearInterval(timer)
+                finishTime = `${min}.${sec}`;
+                
+                
             }else{
                 document.getElementById("timer").innerHTML = `Time: 0${min}: ${sec}`;
-    
                 if (sec%60 == 0) {
                     min++;
                     sec = 0
@@ -222,19 +222,14 @@ function checkIfSorted(arr) {
                 sec++
             }
         }
-        
-    
-            // sec++
-            // if (sec%60 == 0) {
-            //     min++
-            //     sec = 0;
-            //   }else{
-                
-            //   }
-    
-        
-    
       };
+
+
+      function clearGame(params) {
+
+        document.getElementById("score").innerHTML = `You finished in: ${finishTime}`;
+        
+      }
 
 
 export default createPuzzlepieces
