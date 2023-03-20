@@ -46,10 +46,9 @@ test.addEventListener("click",async ()=>{
     }
   });
   let data = await response.json();
-  //let tester = JSON.parse(data)
   let tester = data
 
-console.log(JSON.stringify(tester));
+console.log(data);
 
 });
 
