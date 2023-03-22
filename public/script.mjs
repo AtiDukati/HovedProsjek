@@ -15,8 +15,7 @@ let test = document.getElementById("test");
 // });
 
 loginBtn.addEventListener(`click`, async () => {
-  
-  let data = await fetch("/login", {
+  let response = await fetch("/login", {
     method: "POST",
     headers: {
       "content-type": "application/json",
@@ -27,15 +26,15 @@ loginBtn.addEventListener(`click`, async () => {
     }),
   });
 
-  if (data.status === 200) {
+  if (response.status === 200) {  
     console.log("acses granted");
+    let data = await response.json()
+    console.log(data);
 
     dashBoard();
   }
-  console.log(data.status);
+  console.log(response.status);
 });
-
-
 
 test.addEventListener("click", async () => {
   let response = await fetch("/getProfile", {
@@ -44,10 +43,7 @@ test.addEventListener("click", async () => {
       "content-type": "application/json",
     },
   });
-  let data = await response.json();
-  let tester = data;
 
-  console.log(data);
 });
 
 async function dashBoard() {
@@ -64,7 +60,6 @@ async function dashBoard() {
 
   // console.log(data);
 
-
   document.getElementById("profile").addEventListener("click", () => {
     createDashboard("profileDash");
   });
@@ -79,7 +74,6 @@ async function dashBoard() {
   });
 }
 
-
 register.addEventListener(`click`, () => {
   createDashboard("registerDash");
 
@@ -87,8 +81,9 @@ register.addEventListener(`click`, () => {
   let password = document.getElementById("registerPassword");
 
   document.getElementById("registerBtn").addEventListener("click", async () => {
-    let data = await fetch("/registerUser", {
-      method: "post",
+
+    let response = await fetch("/registerUser", {
+      method: "POST",
       headers: {
         "content-type": "application/json",
       },
@@ -98,17 +93,11 @@ register.addEventListener(`click`, () => {
       }),
     });
 
-    if (data.status === 200) {
+    if (response.status === 200) {
       console.log("New user created");
       dashBoard();
     }
-    console.log(data.status);
   });
-
-
-
-
-
 });
 
 function createDashboard(dash) {

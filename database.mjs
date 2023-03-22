@@ -19,40 +19,55 @@ const client = new pg.Client({
   }
 })();
 
-// client.query('SELECT * FROM my_table')
-//   .then(res => console.log(res.rows))
-//   .catch(err => console.error('Error executing query', err))
-//   .finally(() => client.end());
-
-// function testDB(params) {
-//   client
-//     .query("SELECT * FROM users")
-//     .then((res) => console.log(res.rows))
-//     .catch((err) => console.error("Error executing query", err))
-//     .finally(() => client.end());
-// }
-
 class sqlActions {
   constructor() {
     //this.value1 = value1;
     // this.value2 = value2;
   }
 
-  showAll() {
-    client
-      .query(`SELECT * FROM ${users}`)
-      .then((res) => console.log(res.rows))
-      .catch((err) => console.error("Error executing query", err))
-      .finally(() => client.end());
-  };
+  async showAll() {
+    try {
+      client
+        .query(`SELECT * FROM users`)
+        .then((res) => console.log(res.rows))
+        .catch((err) => console.error("Error executing query", err))
+        .finally(() => client.end());
+    } catch (error) {
+      console.error("Error executing query", error);
+    }
+  }
 
-  registerNewUser(userName){
-    client
-      .query(`INSERT INTO users COLUMN (username) VALUES (${userName})`)
-      .then((res) => console.log(res.rows))
-      .catch((err) => console.error("Error executing query", err))
-      .finally(() => client.end());
+  async registerNewUser(userName, userPass) {
+    try {
+      // Insert data into the users table
+      await client.query(
+        `INSERT INTO users (username , password) VALUES ('${userName}', '${userPass}')`
+      );
+      client.end();
+    } catch (error) {
+      console.error("Error executing query", error);
+    }
+  }
 
+  async loginCheck(userName, userPass) {
+    try {
+      // Insert data into the users table
+      let loginCheck = await client.query(
+        `SELECT * FROM users WHERE username = '${userName}' AND password = '${userPass}'`
+      );
+      client.end();
+
+      if (loginCheck.rows.length >= 0) {
+        console.log("Login successful");
+        return loginCheck.rows[0];
+      } else {
+        console.log("Invalid username or password");
+        return null;
+      }
+    } catch (error) {
+      console.log("either username or password is incorrect", error);
+      return null;
+    }
   }
 }
 
