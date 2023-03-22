@@ -1,9 +1,11 @@
 import express from "express";
 import hash from "./crypto.mjs";
-//import pg from "pg";
 // import Joke from "./node_modules/jokemaster/joke.mjs";
 import TLanguage from "./node_modules/languageModul/module1.mjs";
 import profiles from './profiles.json' assert {type: 'json'};
+import sqlActions from "./database.mjs"
+
+
 
 
 const server = express();
@@ -14,6 +16,9 @@ console.log(`Running port`, port);
 server.set("port", port);
 server.use(express.json());
 server.use(express.static("public"));
+
+
+
 
 // server.get("/getUserProfile/", (req, res, next) =>{
 
@@ -49,8 +54,11 @@ server.post("/login", async (req, res) => {
 
   if (req.body.username !== "" && req.body.password !== "" ) {
 
-    const psw = hash(req.body.password);
-    console.log(psw);
+    // const psw = hash(req.body.password);
+    // console.log(psw);
+
+    let newUser = new sqlActions
+    newUser.registerNewUser(req.body.username);
 
     res.status(200).end();
 

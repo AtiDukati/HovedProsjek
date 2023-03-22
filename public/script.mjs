@@ -15,6 +15,7 @@ let test = document.getElementById("test");
 // });
 
 loginBtn.addEventListener(`click`, async () => {
+  
   let data = await fetch("/login", {
     method: "POST",
     headers: {
