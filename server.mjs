@@ -1,10 +1,9 @@
 import express from "express";
+import hash from "./crypto.mjs";
 //import pg from "pg";
 // import Joke from "./node_modules/jokemaster/joke.mjs";
 import TLanguage from "./node_modules/languageModul/module1.mjs";
 import profiles from './profiles.json' assert {type: 'json'};
-
-
 
 
 const server = express();
@@ -23,12 +22,12 @@ server.use(express.static("public"));
 
 // } );
 
-server.get("/getProfile", (req, res, next) =>{
+server.get("/getProfile", (req, res) =>{
 let user = profiles
   
 res.json(user).end();
 
-} )
+});
 
 
 // server.get("/getJokeNo/:index", (req, res, next) => {
@@ -46,19 +45,43 @@ res.json(user).end();
 // });
 
 
-
-
 server.post("/login", async (req, res) => {
 
   if (req.body.username !== "" && req.body.password !== "" ) {
 
+    const psw = hash(req.body.password);
+    console.log(psw);
+
     res.status(200).end();
+
+    //res.json(user)
+
+    console.log(profiles);
     
   }else{
     res.status(403).end();
   }
   //console.log(req.body);
 });
+
+
+server.post("/registerUser", async (req, res, next) =>{
+
+  console.log(req.body);
+
+
+  if (req.body.username !== "" && req.body.password !== "" ) {
+
+    const psw = hash(req.body.password);
+    console.log(psw);
+
+    res.status(200).end();
+    
+  }else{
+    res.status(403).end();
+  }
+
+})
 
 
 server.listen(server.get("port"), () => {});

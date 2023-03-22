@@ -29,7 +29,7 @@ originalImage.onload = function() {
     
 
 // set the size of each tile
-const tileSize = originalImage.width/2;
+const tileSize = originalImage.width/ (40/8);
 
 
 // calculate the number of rows and columns of tiles needed
@@ -169,7 +169,7 @@ function gameStatusCheck(params) {
         
     });
 
-    if (tempArr.length === 8 && checkIfSorted(tempArr)){
+    if (tempArr.length === 40 && checkIfSorted(tempArr)){
         console.log("you won");
         finish = true;
         
