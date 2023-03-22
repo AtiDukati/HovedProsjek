@@ -48,7 +48,7 @@ class sqlActions {
 
   registerNewUser(userName){
     client
-      .query(`INSERT INTO ${users} COLUMN (username) VALUES (${userName})`)
+      .query(`INSERT INTO users COLUMN (username) VALUES (${userName})`)
       .then((res) => console.log(res.rows))
       .catch((err) => console.error("Error executing query", err))
       .finally(() => client.end());
