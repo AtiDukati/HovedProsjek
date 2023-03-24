@@ -40,8 +40,6 @@ server.get("/getProfile", (req, res) => {
 
 server.post("/login", async (req, res) => {
 
-  //let loginUser = new sqlActions().loginCheck(req.body.username, hash(req.body.password));
-
   let loginUser = new sqlActions();
   let user = await loginUser.loginCheck(req.body.username, hash(req.body.password));
   
@@ -49,7 +47,7 @@ server.post("/login", async (req, res) => {
 
   if (user !== null) {
     res.status(200);
-    res.json(user).end();
+    // res.json(user).end();
 
     // res.json(loginUser.body)
     // console.log(res);
@@ -60,10 +58,11 @@ server.post("/login", async (req, res) => {
 });
 
 server.post("/registerUser", async (req, res, next) => {
-  let newUser = new sqlActions().registerNewUser(req.body.username, hash(req.body.password));
-  
-  console.log(hash(req.body.password));
-  console.log(newUser);
+  let newUser = new sqlActions();
+  let user = await newUser.registerNewUser(req.body.username, hash(req.body.password));
+
+  // console.log(hash(req.body.password));
+  console.log(req.body);
 
   if (req.body.username !== "" && req.body.password !== "") {
     res.status(200).end();

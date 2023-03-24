@@ -1,8 +1,7 @@
 import createPuzzlepieces from "./image.mjs";
 
 let home = document.getElementById("home");
-let username = document.getElementById("username");
-let password = document.getElementById("password");
+
 let loginBtn = document.getElementById("loginBtn");
 let register = document.getElementById("register");
 let test = document.getElementById("test");
@@ -15,6 +14,9 @@ let test = document.getElementById("test");
 // });
 
 loginBtn.addEventListener(`click`, async () => {
+  let username = document.getElementById("username");
+  let password = document.getElementById("password");
+
   let response = await fetch("/login", {
     method: "POST",
     headers: {
@@ -26,14 +28,39 @@ loginBtn.addEventListener(`click`, async () => {
     }),
   });
 
-  if (response.status === 200) {  
+  if (response.status === 200) {
     console.log("acses granted");
-    let data = await response.json()
-    console.log(data);
+    // let data = await response.json();
+    // console.log(data);
 
     dashBoard();
   }
   console.log(response.status);
+});
+
+register.addEventListener(`click`, () => {
+  createDashboard("registerDash");
+
+  let username = document.getElementById("registerUsername");
+  let password = document.getElementById("registerPassword");
+
+  document.getElementById("registerBtn").addEventListener("click", async () => {
+    let response = await fetch("/registerUser", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        username: username.value,
+        password: password.value,
+      }),
+    });
+
+    if (response.status === 200) {
+      console.log("New user created");
+      dashBoard();
+    }
+  });
 });
 
 test.addEventListener("click", async () => {
@@ -43,7 +70,6 @@ test.addEventListener("click", async () => {
       "content-type": "application/json",
     },
   });
-
 });
 
 async function dashBoard() {
@@ -74,31 +100,7 @@ async function dashBoard() {
   });
 }
 
-register.addEventListener(`click`, () => {
-  createDashboard("registerDash");
 
-  let username = document.getElementById("registerUsername");
-  let password = document.getElementById("registerPassword");
-
-  document.getElementById("registerBtn").addEventListener("click", async () => {
-
-    let response = await fetch("/registerUser", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({
-        username: username.value,
-        password: password.value,
-      }),
-    });
-
-    if (response.status === 200) {
-      console.log("New user created");
-      dashBoard();
-    }
-  });
-});
 
 function createDashboard(dash) {
   home.innerHTML = "";
