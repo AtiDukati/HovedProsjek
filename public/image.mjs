@@ -1,4 +1,4 @@
-import { createDashboard, startTimer, stopTimer } from "./script.mjs";
+import { createDashboard, startTimer, stopTimer, submitScoreScreen } from "./script.mjs";
 
 let currTile;
 let otherTile;
@@ -161,12 +161,12 @@ function gameStatusCheck(params) {
   //if (tempArr.length === 40 && checkIfSorted(tempArr)) {
     console.log("you won");
     stopTimer();
-
     createDashboard("gameFinish");
+    submitScoreScreen();
+    
   } else {
     console.log("not yet");
   }
-
   console.log(tempArr);
 }
 
@@ -180,9 +180,11 @@ function checkIfSorted(arr) {
   return true;
 }
 
-function clearGame(params) {
-  document.getElementById("score").innerHTML = `You finished in: ${finishTime}`;
-}
+
+
+// function clearGame(params) {
+//   document.getElementById("score").innerHTML = `You finished in: ${finishTime}`;
+// }
 
 export default createPuzzlepieces;
 

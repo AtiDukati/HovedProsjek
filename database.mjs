@@ -48,14 +48,14 @@ class sqlActions {
       console.error("Error executing query", error);
     }
   }
-  //==========================================LOG IN CHECK===================================
+  //==========================================LOGIN CHECK===================================
   async loginCheck(userName, userPass) {
     try {
       // Insert data into the users table
       let loginCheck = await client.query(
         `SELECT * FROM users WHERE username = '${userName}' AND password = '${userPass}'`
       );
-      client.end();
+      //client.end();
 
       if (loginCheck.rows.length >= 0) {
         console.log("Login successful");
@@ -69,16 +69,17 @@ class sqlActions {
       return null;
     }
   }
-
-  async submitScore() {
+//==========================================SUBMIT SCORE===================================
+  async submitScore(score) {
     try {
       // Insert data into the scoreboard table
       await client.query(
-        `INSERT INTO scoreboard (username , password) VALUES ('${userName}', '${userPass}')`
+        `INSERT INTO scoreboard (userid, score) VALUES ('${1}', '${score}')`
+        //`INSERT INTO users (username , password) VALUES ('${score}')`
       );
-      client.end();
+      //client.end();
     } catch (error) {
-      console.error("Error executing query", error);
+      console.log("Error executing query", error);
     }
   }
 }

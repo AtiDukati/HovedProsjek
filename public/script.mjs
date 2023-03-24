@@ -80,6 +80,29 @@ test.addEventListener("click", async () => {
   });
 });
 
+function submitScoreScreen() {
+
+  let endTime = document.getElementById("score").innerHTML = finishTime;
+  let submitBtn = document.getElementById("submitScore").addEventListener("click", async ()=>{
+    
+    let response = await fetch("/registerScore", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        score: finishTime
+      }),
+    });
+
+    if (response.status === 200) {
+      console.log("New score added");
+      //dashBoard();
+    }
+  })
+  
+}
+
 async function dashBoard() {
   const dashboardTemplate = document.getElementById("dashboard");
   const clone = dashboardTemplate.content.cloneNode(true);
@@ -100,13 +123,13 @@ async function dashBoard() {
 
   document.getElementById("profile").addEventListener("click", () => {
     //finish = true;
-    stopTimer()
+    stopTimer();
     createDashboard("profileDash");
   });
 
   document.getElementById("highscore").addEventListener("click", () => {
     //finish = true;
-    stopTimer()
+    stopTimer();
     createDashboard("highscoreDash");
   });
 
@@ -133,34 +156,22 @@ function startTimer() {
   timer = setInterval(start, 1000);
 
   function start() {
-
     document.getElementById("timer").innerHTML = `Time: 0${min}: ${sec}`;
 
-      if (sec % 60 == 0) {
-        min++;
-        sec = 0;
-      }
-      sec++;
-    // if (finish === true) {
-    //   clearInterval(timer);
-    //   finishTime = `${min}.${sec}`;
-    // } else {
-    //   document.getElementById("timer").innerHTML = `Time: 0${min}: ${sec}`;
-
-    //   if (sec % 60 == 0) {
-    //     min++;
-    //     sec = 0;
-    //   }
-    //   sec++;
-    // }
+    if (sec % 60 == 0) {
+      min++;
+      sec = 0;
+    }
+    sec++;
   }
-}
+};
+
+
 
 function stopTimer() {
   clearInterval(timer);
-  finishTime = `${min}:${sec}`
+  finishTime = `${min}:${sec}`;
   console.log(finishTime);
-
 }
 
-export { createDashboard, startTimer, stopTimer };
+export { createDashboard, startTimer, stopTimer, submitScoreScreen };

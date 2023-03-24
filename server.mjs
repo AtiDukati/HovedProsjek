@@ -46,7 +46,7 @@ server.post("/login", async (req, res) => {
   let loginUser = new sqlActions();
   let user = await loginUser.loginCheck(req.body.username, hash(req.body.password));
   
-  console.log(user);
+  //console.log(user);
 
   if (user !== null) {
     res.status(200);
@@ -60,12 +60,22 @@ server.post("/login", async (req, res) => {
   //console.log(req.body);
 });
 
+server.post("/registerScore", async (req, res) =>{
+
+let newScore = new sqlActions();
+let score = await newScore.submitScore(req.body.score);
+
+console.log(req.body.score);
+res.status(200).end()
+
+})
+
 server.post("/registerUser", async (req, res, next) => {
   let newUser = new sqlActions();
   let user = await newUser.registerNewUser(req.body.username, hash(req.body.password));
 
   // console.log(hash(req.body.password));
-  console.log(req.body);
+  //console.log(req.body);
 
   if (req.body.username !== "" && req.body.password !== "") {
     res.status(200).end();

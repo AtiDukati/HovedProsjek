@@ -8,11 +8,8 @@
     <title>Document</title>
   </head>
   <body>
-
     <div id="main">
-      <nav id="navbar">
-        
-      </nav>
+      <nav id="navbar"></nav>
 
       <div id="home">
         <label for="username">User Name</label>
@@ -27,19 +24,6 @@
         <button id="test">Test</button>
       </div>
     </div>
-
-    <!-- <template id="loginDash">
-      <label for="username">User Name</label>
-      <input id="username" type="text" />
-      <br />
-      <label for="password">Password</label>
-      <input id="password" type="password" />
-      <br />
-      <button id="loginBtn">Login</button>
-      <br />
-      <p id="register">Register</p>
-      <button id="test">Test</button>
-    </template> -->
 
     <template id="registerDash">
       <label for="registerUsername">Create user name:</label>
@@ -90,10 +74,13 @@
     </template>
 
     <template id="gameFinish">
-      <div id="submitScore">
+      <div id="submitContainer">
         <h1 id="h1">You won!</h1>
-        <div id="submitSore">
+        <div id="scoreContainer">
           <p id="score"></p>
+        </div>
+        <div>
+          <button id="submitScore">Submit score</button>
         </div>
       </div>
     </template>
