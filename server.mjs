@@ -18,6 +18,7 @@ server.use(express.static("public"));
 
 // } );
 
+
 server.get("/getProfile", (req, res) => {
   let user = profiles;
 

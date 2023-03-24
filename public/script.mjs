@@ -6,6 +6,14 @@ let loginBtn = document.getElementById("loginBtn");
 let register = document.getElementById("register");
 let test = document.getElementById("test");
 
+let finish = false;
+let finishTime = "";
+let timer;
+let sec = 1;
+let min = 0;
+
+// let intervalId = setInterval(myTimer, 1000);
+
 //testing
 // window.addEventListener("load", ()=>{
 //   createDashboard("gameDash");
@@ -91,20 +99,24 @@ async function dashBoard() {
   // console.log(data);
 
   document.getElementById("profile").addEventListener("click", () => {
+    //finish = true;
+    stopTimer()
     createDashboard("profileDash");
   });
 
   document.getElementById("highscore").addEventListener("click", () => {
+    //finish = true;
+    stopTimer()
     createDashboard("highscoreDash");
   });
 
   document.getElementById("game").addEventListener("click", () => {
+    finish = false;
+    startTimer();
     createDashboard("gameDash");
     createPuzzlepieces();
   });
 }
-
-
 
 function createDashboard(dash) {
   home.innerHTML = "";
@@ -114,4 +126,41 @@ function createDashboard(dash) {
   console.log(dash);
 }
 
-export { createDashboard };
+function startTimer() {
+  sec = 1;
+  min = 0;
+
+  timer = setInterval(start, 1000);
+
+  function start() {
+
+    document.getElementById("timer").innerHTML = `Time: 0${min}: ${sec}`;
+
+      if (sec % 60 == 0) {
+        min++;
+        sec = 0;
+      }
+      sec++;
+    // if (finish === true) {
+    //   clearInterval(timer);
+    //   finishTime = `${min}.${sec}`;
+    // } else {
+    //   document.getElementById("timer").innerHTML = `Time: 0${min}: ${sec}`;
+
+    //   if (sec % 60 == 0) {
+    //     min++;
+    //     sec = 0;
+    //   }
+    //   sec++;
+    // }
+  }
+}
+
+function stopTimer() {
+  clearInterval(timer);
+  finishTime = `${min}:${sec}`
+  console.log(finishTime);
+
+}
+
+export { createDashboard, startTimer, stopTimer };

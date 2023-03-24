@@ -1,4 +1,4 @@
-import { createDashboard } from "./script.mjs";
+import { createDashboard, startTimer, stopTimer } from "./script.mjs";
 
 let currTile;
 let otherTile;
@@ -7,11 +7,12 @@ let imagePeaces = [];
 let blankImagePeaces = [];
 // const numberOfPieces = 40;
 
-let finish = false;
-let finishTime = "";
+// let finish = false;
+// let finishTime = "";
 
 function createPuzzlepieces() {
-  myTimer();
+    imagePeaces = [];
+    blankImagePeaces = [];
 
   // create an image object for the original image
   const originalImage = new Image();
@@ -20,7 +21,8 @@ function createPuzzlepieces() {
   // wait for the original image to load
   originalImage.onload = function () {
     // set the size of each tile
-    const tileSize = originalImage.width / (40 / 8);
+    const tileSize = originalImage.width / (40 / 30);
+    //const tileSize = originalImage.width / (40 / 8);
 
     // calculate the number of rows and columns of tiles needed
     const numRows = originalImage.height / tileSize;
@@ -155,9 +157,10 @@ function gameStatusCheck(params) {
     }
   });
 
-  if (tempArr.length === 40 && checkIfSorted(tempArr)) {
+  if (tempArr.length === 6 && checkIfSorted(tempArr)) {
+  //if (tempArr.length === 40 && checkIfSorted(tempArr)) {
     console.log("you won");
-    finish = true;
+    stopTimer();
 
     createDashboard("gameFinish");
   } else {
@@ -177,29 +180,10 @@ function checkIfSorted(arr) {
   return true;
 }
 
-function myTimer() {
-  let sec = 1;
-  let min = 0;
-
-  let timer = setInterval(start, 1000);
-  function start() {
-    if (finish === true) {
-      clearInterval(timer);
-      finishTime = `${min}.${sec}`;
-    } else {
-      document.getElementById("timer").innerHTML = `Time: 0${min}: ${sec}`;
-      
-      if (sec % 60 == 0) {
-        min++;
-        sec = 0;
-      }
-      sec++;
-    }
-  }
-}
-
 function clearGame(params) {
   document.getElementById("score").innerHTML = `You finished in: ${finishTime}`;
 }
 
 export default createPuzzlepieces;
+
+
