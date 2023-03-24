@@ -8,7 +8,27 @@
     <title>Document</title>
   </head>
   <body>
-    <div id="home">
+
+    <div id="main">
+      <nav id="navbar">
+        
+      </nav>
+
+      <div id="home">
+        <label for="username">User Name</label>
+        <input id="username" type="text" />
+        <br />
+        <label for="password">Password</label>
+        <input id="password" type="password" />
+        <br />
+        <button id="loginBtn">Login</button>
+        <br />
+        <p id="register">Register</p>
+        <button id="test">Test</button>
+      </div>
+    </div>
+
+    <template id="loginDash">
       <label for="username">User Name</label>
       <input id="username" type="text" />
       <br />
@@ -19,7 +39,7 @@
       <br />
       <p id="register">Register</p>
       <button id="test">Test</button>
-    </div>
+    </template>
 
     <template id="registerDash">
       <label for="registerUsername">Create user name:</label>
@@ -29,29 +49,26 @@
       <input id="registerPassword" type="password" />
       <br />
       <button id="registerBtn">Create user</button>
-      
     </template>
 
     <template id="dashboard">
-      <h1 id="h1">Welcome</h1>
       <button id="profile">Profile</button>
       <button id="highscore">Highscore</button>
       <button id="game">Game</button>
-      
+      <button id="logOut">Logout</button>
     </template>
 
     <template id="profileDash">
       <div>
         <img src="" alt="" />
-      <h1 id="userName">Profile</h1>
+        <h1 id="userName">Profile</h1>
       </div>
-      
+
       <ol>
         <li>score1</li>
         <li>score2</li>
         <li>score3</li>
       </ol>
-
     </template>
 
     <template id="highscoreDash">
@@ -83,13 +100,6 @@
 
     <!-- <script src="./image.mjs"></script> -->
     <script src="./script.mjs" type="module"></script>
-
-    
-
-    <script>
-      
-     
-    </script>
 
     <!-- <button id="newBtn">New Joke</button>
     <button id="enBtn">En</button>

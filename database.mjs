@@ -24,7 +24,7 @@ class sqlActions {
     //this.value1 = value1;
     // this.value2 = value2;
   }
-
+  //==========================================SHOW ALL===================================
   async showAll() {
     try {
       client
@@ -36,7 +36,7 @@ class sqlActions {
       console.error("Error executing query", error);
     }
   }
-
+  //==========================================REGISTER NEW USER===================================
   async registerNewUser(userName, userPass) {
     try {
       // Insert data into the users table
@@ -48,7 +48,7 @@ class sqlActions {
       console.error("Error executing query", error);
     }
   }
-
+  //==========================================LOG IN CHECK===================================
   async loginCheck(userName, userPass) {
     try {
       // Insert data into the users table
@@ -67,6 +67,18 @@ class sqlActions {
     } catch (error) {
       console.log("either username or password is incorrect", error);
       return null;
+    }
+  }
+
+  async submitScore() {
+    try {
+      // Insert data into the scoreboard table
+      await client.query(
+        `INSERT INTO scoreboard (username , password) VALUES ('${userName}', '${userPass}')`
+      );
+      client.end();
+    } catch (error) {
+      console.error("Error executing query", error);
     }
   }
 }

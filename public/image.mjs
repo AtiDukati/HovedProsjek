@@ -187,7 +187,8 @@ function myTimer() {
       clearInterval(timer);
       finishTime = `${min}.${sec}`;
     } else {
-      document.getElementById("timer").innerHTML = `Time: 0${min}: 0${sec}`;
+      document.getElementById("timer").innerHTML = `Time: 0${min}: ${sec}`;
+      
       if (sec % 60 == 0) {
         min++;
         sec = 0;

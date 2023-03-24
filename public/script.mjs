@@ -1,7 +1,7 @@
 import createPuzzlepieces from "./image.mjs";
 
 let home = document.getElementById("home");
-
+let navbar = document.getElementById("navbar");
 let loginBtn = document.getElementById("loginBtn");
 let register = document.getElementById("register");
 let test = document.getElementById("test");
@@ -73,7 +73,11 @@ test.addEventListener("click", async () => {
 });
 
 async function dashBoard() {
-  createDashboard("dashboard");
+  const dashboardTemplate = document.getElementById("dashboard");
+  const clone = dashboardTemplate.content.cloneNode(true);
+  navbar.appendChild(clone);
+
+  createDashboard("profileDash");
 
   // let response = await fetch("/getProfile", {
   //   method: "GET",
