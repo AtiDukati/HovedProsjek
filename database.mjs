@@ -56,12 +56,14 @@ class sqlActions {
         `SELECT * FROM users WHERE username = '${userName}' AND password = '${userPass}'`
       );
       //client.end();
-
-      if (loginCheck.rows.length >= 0) {
+    
+      if (loginCheck.rows.length > 0) {
         console.log("Login successful");
+        client.end();
         return loginCheck.rows[0];
       } else {
         console.log("Invalid username or password");
+        //client.end();
         return null;
       }
     } catch (error) {

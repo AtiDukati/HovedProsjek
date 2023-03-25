@@ -171,6 +171,8 @@ function startTimer() {
 function stopTimer() {
   clearInterval(timer);
   finishTime = `${min}:${sec}`;
+  sec = 1;
+  min = 0;
   console.log(finishTime);
 }
 

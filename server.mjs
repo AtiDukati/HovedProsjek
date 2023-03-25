@@ -46,7 +46,7 @@ server.post("/login", async (req, res) => {
   let loginUser = new sqlActions();
   let user = await loginUser.loginCheck(req.body.username, hash(req.body.password));
   
-  //console.log(user);
+  console.log(req.body);
 
   if (user !== null) {
     res.status(200);
@@ -55,6 +55,8 @@ server.post("/login", async (req, res) => {
     // res.json(loginUser.body)
     // console.log(res);
   } else {
+    // loginUser = "";
+    // user = "";
     res.status(403).end();
   }
   //console.log(req.body);
