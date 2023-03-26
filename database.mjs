@@ -3,67 +3,79 @@ import pg from "pg";
 const url =
   "postgres://cffuzpghjtwtrb:22730d294f419c6db2018f712b7aee7ed90143c825fa1c449e4cb7f71e89aa11@ec2-34-251-233-253.eu-west-1.compute.amazonaws.com:5432/d36k4deoigdirj";
 
-const client = new pg.Client({
-  connectionString: process.env.DATABASE_URL || url,
-  ssl: {
-    rejectUnauthorized: false,
-  },
-});
-
-(async () => {
-  try {
-    await client.connect();
-    console.log("Connected to database");
-  } catch (err) {
-    console.error("Error connecting to database", err);
-  }
-})();
+// const client = new pg.Client({
+//   connectionString: process.env.DATABASE_URL || url,
+//   ssl: {
+//     rejectUnauthorized: false,
+//   },
+// });
 
 class sqlActions {
+
   constructor() {
-    //this.value1 = value1;
-    // this.value2 = value2;
+    this.client = null;
+    this.credentials = {
+      connectionString: process.env.DATABASE_URL || url,
+      ssl: {
+        rejectUnauthorized: false,
+      },
+    };
+  }
+
+  async connectToDatabase(params) {
+    
+    this.client = new pg.Client(this.credentials);
+    
+    try {
+      await this.client.connect();
+      console.log("Connected to database");
+    } catch (err) {
+      console.error("Error connecting to database", err);
+    }
   }
   //==========================================SHOW ALL===================================
   async showAll() {
+    await this.connectToDatabase();
     try {
-      client
+      this.client
         .query(`SELECT * FROM users`)
         .then((res) => console.log(res.rows))
         .catch((err) => console.error("Error executing query", err))
-        .finally(() => client.end());
+        .finally(() => this.client.end());
     } catch (error) {
       console.error("Error executing query", error);
     }
   }
   //==========================================REGISTER NEW USER===================================
   async registerNewUser(userName, userPass) {
+    await this.connectToDatabase();
     try {
       // Insert data into the users table
-      await client.query(
+      await this.client.query(
         `INSERT INTO users (username , password) VALUES ('${userName}', '${userPass}')`
       );
-      client.end();
+      this.client.end();
     } catch (error) {
       console.error("Error executing query", error);
     }
   }
   //==========================================LOGIN CHECK===================================
   async loginCheck(userName, userPass) {
+    await this.connectToDatabase();
     try {
       // Insert data into the users table
-      let loginCheck = await client.query(
+      let loginCheck = await this.client.query(
         `SELECT * FROM users WHERE username = '${userName}' AND password = '${userPass}'`
       );
       //client.end();
-    
+
       if (loginCheck.rows.length > 0) {
         console.log("Login successful");
-        client.end();
+        this.client.end();
         return loginCheck.rows[0];
       } else {
         console.log("Invalid username or password");
-        //client.end();
+        this.client.end();
         return null;
       }
     } catch (error) {
@@ -71,15 +83,16 @@ class sqlActions {
       return null;
     }
   }
-//==========================================SUBMIT SCORE===================================
+  //==========================================SUBMIT SCORE===================================
   async submitScore(score) {
+    await this.connectToDatabase();
     try {
       // Insert data into the scoreboard table
-      await client.query(
+      await this.client.query(
         `INSERT INTO scoreboard (userid, score) VALUES ('${1}', '${score}')`
         //`INSERT INTO users (username , password) VALUES ('${score}')`
       );
-      //client.end();
+      this.client.end();
     } catch (error) {
       console.log("Error executing query", error);
     }

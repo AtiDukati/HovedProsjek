@@ -1,9 +1,10 @@
 import express from "express";
-import hash from "./crypto.mjs";
+import {hash} from "./crypto.mjs";
 // import Joke from "./node_modules/jokemaster/joke.mjs";
 import TLanguage from "./node_modules/languageModul/module1.mjs";
 import profiles from "./profiles.json" assert { type: "json" };
 import sqlActions from "./database.mjs";
+import createToken from "./JWT.mjs";
 
 const server = express();
 
@@ -43,14 +44,19 @@ server.post("/login", async (req, res) => {
 
   //let loginUser = new sqlActions().loginCheck(req.body.username, hash(req.body.password));
 
+  const basicSplit = req.headers.authorization.split(" ")[1];
+  const decoded = Buffer.from(basicSplit, "base64").toString("UTF-8").split(":")
+  console.log(decoded);
+
   let loginUser = new sqlActions();
-  let user = await loginUser.loginCheck(req.body.username, hash(req.body.password));
+  let user = await loginUser.loginCheck(decoded[0], hash(decoded[1]));
   
-  console.log(req.body);
+  //console.log(req.body);
 
   if (user !== null) {
     res.status(200);
-    res.json(user).end();
+    const token = createToken(decoded[0])
+    res.json(token).end();
 
     // res.json(loginUser.body)
     // console.log(res);
@@ -63,6 +69,8 @@ server.post("/login", async (req, res) => {
 });
 
 server.post("/registerScore", async (req, res) =>{
+
+
 
 let newScore = new sqlActions();
 let score = await newScore.submitScore(req.body.score);

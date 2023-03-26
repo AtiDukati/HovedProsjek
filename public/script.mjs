@@ -1,5 +1,7 @@
 import createPuzzlepieces from "./image.mjs";
 
+
+
 let home = document.getElementById("home");
 let navbar = document.getElementById("navbar");
 let loginBtn = document.getElementById("loginBtn");
@@ -11,6 +13,8 @@ let finishTime = "";
 let timer;
 let sec = 1;
 let min = 0;
+
+localStorage.clear();
 
 // let intervalId = setInterval(myTimer, 1000);
 
@@ -29,17 +33,15 @@ loginBtn.addEventListener(`click`, async () => {
     method: "POST",
     headers: {
       "content-type": "application/json",
+      "authorization": createBasicAuthString(username.value, password.value)
     },
-    body: JSON.stringify({
-      username: username.value,
-      password: password.value,
-    }),
   });
 
   if (response.status === 200) {
     console.log("acses granted");
-    // let data = await response.json();
-    // console.log(data);
+    let data = await response.json();
+    localStorage.setItem("token", data);
+    console.log(data);
 
     dashBoard();
   }
@@ -174,6 +176,12 @@ function stopTimer() {
   sec = 1;
   min = 0;
   console.log(finishTime);
-}
+};
+
+function createBasicAuthString(username, password) {
+  let combinedStr = `${username}:${password}`;
+  let b64Str = btoa(combinedStr);
+  return "basic " + b64Str; 
+};
 
 export { createDashboard, startTimer, stopTimer, submitScoreScreen };
