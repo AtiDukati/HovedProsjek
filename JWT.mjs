@@ -22,7 +22,7 @@ function createToken(payload) {
 
   return token;
 
-}
+};
 
 function base64UrlEncoding(rawData) {
 
@@ -33,4 +33,16 @@ function base64UrlEncoding(rawData) {
     return encode;
 };
 
-export default createToken;
+
+function decodeToken(token) {
+  const tokenParts = token.split(".");
+  const payload = JSON.parse(Buffer.from(tokenParts[1], "base64url").toString());
+  const username = payload;
+  
+  return username
+};
+
+
+
+//export default createToken;
+export {createToken, decodeToken}

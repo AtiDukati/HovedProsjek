@@ -33,18 +33,52 @@ class sqlActions {
       console.error("Error connecting to database", err);
     }
   }
+//==========================================PROFILE SHOW ALL===================================
+  async showAllProfile(username) {
+    await this.connectToDatabase();
+    
+    try {
+      
+      const result = await this.client.query(
+        `SELECT * FROM scorboard WHERE username=${username}`
+      );
+      
+      this.client.end();
+        return result.rows;
+    } catch (error) {
+      console.error("Error executing query", error);
+      return null;
+    }
+
+
+  }
+
   //==========================================SHOW ALL===================================
   async showAll() {
     await this.connectToDatabase();
+    // try {
+    //   this.client
+    //     .query(`SELECT * FROM users`)
+    //     .then((res) => console.log(res.rows))
+    //     .catch((err) => console.error("Error executing query", err))
+    //     .finally(() => this.client.end());
+    // } catch (error) {
+    //   console.error("Error executing query", error);
+    // }
     try {
-      this.client
-        .query(`SELECT * FROM users`)
-        .then((res) => console.log(res.rows))
-        .catch((err) => console.error("Error executing query", err))
-        .finally(() => this.client.end());
+      
+      const result = await this.client.query(
+        `SELECT * FROM scorboard`
+      );
+      
+      this.client.end();
+        return result.rows;
     } catch (error) {
       console.error("Error executing query", error);
+      return null;
     }
+
+
   }
   //==========================================REGISTER NEW USER===================================
   async registerNewUser(userName, userPass) {
@@ -84,12 +118,12 @@ class sqlActions {
     }
   }
   //==========================================SUBMIT SCORE===================================
-  async submitScore(score) {
+  async submitScore(user, score) {
     await this.connectToDatabase();
     try {
       // Insert data into the scoreboard table
       await this.client.query(
-        `INSERT INTO scoreboard (userid, score) VALUES ('${1}', '${score}')`
+        `INSERT INTO scorboard (username, score) VALUES ('${user}', '${score}')`
         //`INSERT INTO users (username , password) VALUES ('${score}')`
       );
       this.client.end();
