@@ -33,13 +33,30 @@ server.use(express.static("public"));
 //   res.json({ joke: joke, elements: lang[1] }).end();
 // });
 
+
+server.get("/getNo", async (req, res)=>{
+
+  let langNo = TLanguage("No")
+  
+  res.json(langNo).end();
+
+
+})
+
+server.get("/getEn", async (req, res)=>{
+
+  let langEn = TLanguage("En")
+  
+  res.json(langEn).end();
+
+
+})
+
 server.post("/login", async (req, res) => {
   //let loginUser = new sqlActions().loginCheck(req.body.username, hash(req.body.password));
 
   const basicSplit = req.headers.authorization.split(" ")[1];
-  const decoded = Buffer.from(basicSplit, "base64")
-    .toString("UTF-8")
-    .split(":");
+  const decoded = Buffer.from(basicSplit, "base64").toString("UTF-8").split(":");
   //console.log(basicSplit);
 
   let loginUser = new sqlActions();
@@ -63,6 +80,7 @@ server.post("/login", async (req, res) => {
 });
 
 server.post("/registerUser", async (req, res, next) => {
+
   let newUser = new sqlActions();
   let user = await newUser.registerNewUser(
     req.body.username,
@@ -96,16 +114,22 @@ server.get("/scorboard", async (req, res)=>{
 
   let scoreboard = new sqlActions();
   let scores = await scoreboard.showAll()
-  console.log(scores);
+  //console.log(scores);
   res.status(200).json(scores).end();
 
 
 });
 
-server.post("/getProfile", async (req, res) => {
+server.get("/getProfile", async (req, res) => {
 
-  // const username = decodeToken(req.body.token);
-  // console.log(username);
+  let userName = decodeToken(req.headers.authorization.split(" ")[1]);
+  console.log(userName);
+
+  let profile = new sqlActions();
+  let profileScore = await profile.showAllProfile(userName);
+
+  res.status(200).json(profileScore).end();
+
   
   // let profileScoreboard = new sqlActions();
   // let scores = await profileScoreboard.showAllProfile(username)

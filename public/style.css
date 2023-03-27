@@ -18,8 +18,8 @@
     background-color: red; */
 
     margin-top: 2px;
-    /* width: 577px; */
-    width: 759px;
+    width: 577px;
+    /* width: 759px; */
     height: 778px;
     /* border: 1px black solid; */
 
@@ -39,8 +39,8 @@
 
 #puzzlePieces{
     margin-top: 2px;
-     /* width: 594px; */
-     width: 759px;
+     width: 594px;
+     /* width: 759px; */
     height: inherit;
     border: 2px black solid;
 

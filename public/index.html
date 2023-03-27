@@ -12,40 +12,41 @@
       <nav id="navbar"></nav>
 
       <div id="home">
-        <label for="username">User Name</label>
+        <label id="usernameLabel" for="username" class="lang">User Name</label>
         <input id="username" type="text" />
         <br />
-        <label for="password">Password</label>
+        <label id="passwordLabel" for="password" class="lang">Password</label>
         <input id="password" type="password" />
         <br />
-        <button id="loginBtn">Login</button>
+        <button id="loginBtn" class="lang">Login</button>
         <br />
-        <p id="register">Register</p>
+        <p id="register" class="lang">Register</p>
         <button id="test">Test</button>
       </div>
     </div>
 
     <template id="registerDash">
-      <label for="registerUsername">Create user name:</label>
+      <label id="registerUsernameLabel" for="registerUsername" class="lang">Create username:</label>
       <input id="registerUsername" type="text" />
       <br />
-      <label for="registerPassword">Create password:</label>
+      <label id="registerPasswordLabel" for="registerPassword" class="lang">Create password:</label>
       <input id="registerPassword" type="password" />
       <br />
-      <button id="registerBtn">Create user</button>
+      <button id="registerBtn" class="lang">Create user</button>
     </template>
 
     <template id="dashboard">
-      <button id="profile">Profile</button>
-      <button id="highscore">Highscore</button>
-      <button id="game">Game</button>
-      <button id="logOut">Logout</button>
+      <button id="profile" class="lang">Profile</button>
+      <button id="highscoreBtn" class="lang">Highscore</button>
+      <button id="gameBtn" class="lang">Game</button>
+      <button id="logOut" class="lang">Logout</button>
+      <button id="no">No</button>
+      <button id="en">EN</button>
     </template>
 
     <template id="profileDash">
       <div>
-        <img src="" alt="" />
-        <h1 id="userName">Profile</h1>
+        <h1 id="userName" class="lang">Profile</h1>
       </div>
       <div>
         <ol id="listProfile"></ol>
@@ -54,7 +55,7 @@
 
     <template id="highscoreDash">
       <div id="Highscore">
-        <h1 id="h1">Highscore</h1>
+        <h1 id="highscore" class="lang">Highscore</h1>
       </div>
       <div>
         <ol id="listScorebord"></ol>
@@ -62,8 +63,8 @@
     </template>
 
     <template id="gameDash">
-      <h1 id="h1">Game</h1>
-      <h3 id="timer">Time:</h3>
+      <h1 id="game" class="lang">Game</h1>
+      <h3 id="timer" class="lang">Time:</h3>
       <div id="gameSection">
         <div id="puzzlePieces"></div>
         <div id="board"></div>
@@ -72,12 +73,12 @@
 
     <template id="gameFinish">
       <div id="submitContainer">
-        <h1 id="h1">You won!</h1>
+        <h1 id="youwon" class="lang">You won!</h1>
         <div id="scoreContainer">
           <p id="score"></p>
         </div>
         <div>
-          <button id="submitScoreBtn">Submit score</button>
+          <button id="submitScoreBtn" class="lang">Submit score</button>
         </div>
       </div>
     </template>
@@ -104,11 +105,6 @@
       (async function () {
         serverResponse("En");
       })();
-
-      newBtn.addEventListener("click", () => {
-        index = -1;
-        serverResponse(language);
-      });
 
       enBtn.addEventListener("click", async () => {
         await serverResponse("En");

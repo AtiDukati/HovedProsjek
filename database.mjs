@@ -38,9 +38,9 @@ class sqlActions {
     await this.connectToDatabase();
     
     try {
-      
+      console.log(username);
       const result = await this.client.query(
-        `SELECT * FROM scorboard WHERE username=${username}`
+        `SELECT * FROM scorboard WHERE username= '${username}'`
       );
       
       this.client.end();
@@ -68,7 +68,7 @@ class sqlActions {
     try {
       
       const result = await this.client.query(
-        `SELECT * FROM scorboard`
+        `SELECT * FROM scorboard ORDER BY score ASC;`
       );
       
       this.client.end();

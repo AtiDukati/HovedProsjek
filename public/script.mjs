@@ -5,24 +5,22 @@ let navbar = document.getElementById("navbar");
 let loginBtn = document.getElementById("loginBtn");
 let register = document.getElementById("register");
 let test = document.getElementById("test");
+let logout;
+let no;
+let en;
+let chosenLanguage = "En";
 
 let finish = false;
 let finishTime = "";
 let timer;
 let sec = 0;
 let min = 0;
+let secFinal;
+let minFinal;
 
 localStorage.clear();
 
-// let intervalId = setInterval(myTimer, 1000);
-
-//testing
-// window.addEventListener("load", ()=>{
-//   createDashboard("gameDash");
-//     createPuzzlepieces();
-//     setInterval(myTimer, 1000);
-// });
-
+//=============================LOGIN===========================================================
 loginBtn.addEventListener(`click`, async () => {
   let username = document.getElementById("username");
   let password = document.getElementById("password");
@@ -42,10 +40,12 @@ loginBtn.addEventListener(`click`, async () => {
     console.log(data);
 
     dashBoard();
+    profile();
   }
   console.log(response.status);
 });
 
+//=============================REGISTER===========================================================
 register.addEventListener(`click`, () => {
   createDashboard("registerDash");
 
@@ -66,20 +66,12 @@ register.addEventListener(`click`, () => {
 
     if (response.status === 200) {
       console.log("New user created");
-      dashBoard();
+      window.location.reload();
     }
   });
 });
 
-test.addEventListener("click", async () => {
-  let response = await fetch("/getProfile", {
-    method: "GET",
-    headers: {
-      "content-type": "application/json",
-    },
-  });
-});
-
+//=============================SUBMIT SCORE===========================================================
 function submitScoreScreen() {
   let score = (document.getElementById("score").innerHTML = finishTime);
   let submitScoreBtn = document
@@ -103,6 +95,22 @@ function submitScoreScreen() {
     });
 }
 
+async function setLanguage() {
+  let response = await fetch(`/get${chosenLanguage}`);
+  let data = await response.json();
+  console.log(data);
+
+  for (let [id, text] of Object.entries(data)) {
+    let element = document.getElementById(id);
+
+    console.log(element);
+    if (element !== null) {
+      console.log(id);
+      element.innerHTML = text;
+    }
+  }
+}
+
 async function dashBoard() {
   const dashboardTemplate = document.getElementById("dashboard");
   const clone = dashboardTemplate.content.cloneNode(true);
@@ -110,46 +118,31 @@ async function dashBoard() {
 
   createDashboard("profileDash");
 
-  // let response = await fetch("/getProfile", {
-  //   method: "GET",
-  //   headers: {
-  //     "content-type": "application/json",
-  //   },
-  // });
-  // let data = await response.json();
-  // let tester = data;
+  document.getElementById("no").addEventListener("click", async () => {
+    chosenLanguage = "No";
+    setLanguage();
+  });
 
-  // console.log(data);
+  document.getElementById("en").addEventListener("click", async () => {
+    chosenLanguage = "En";
+    setLanguage();
+  });
+
+  logout = document.getElementById("logOut");
+  logout.addEventListener("click", () => {
+    window.location.reload();
+  });
 
   document.getElementById("profile").addEventListener("click", async () => {
     stopTimer();
-    createDashboard("profileDash");
-
-    // let response = await fetch("/getProfile", {
-    //   method: "POST",
-    //   headers: {
-    //     "content-type": "application.json",
-    //   },
-    //   body: JSON.stringify({
-    //     token: localStorage.getItem("token")
-    //   })
-    // });
-
-    // let data = await response.json();
-    
-
-    // const list = document.getElementById("listProfile");
-
-    // data.forEach((element) => {
-    //   const instance = document.createElement("li");
-    //   instance.innerHTML = `${element.username}: ${element.score}`;
-    //   list.appendChild(instance);
-    // });
+    profile();
+    setLanguage();
   });
 
-  document.getElementById("highscore").addEventListener("click", async () => {
+  document.getElementById("highscoreBtn").addEventListener("click", async () => {
     stopTimer();
     createDashboard("highscoreDash");
+    
 
     let response = await fetch("/scorboard", {
       method: "GET",
@@ -168,13 +161,15 @@ async function dashBoard() {
       instance.innerHTML = `${element.username}: ${element.score}`;
       list.appendChild(instance);
     });
+    setLanguage();
   });
 
-  document.getElementById("game").addEventListener("click", () => {
+  document.getElementById("gameBtn").addEventListener("click", () => {
     finish = false;
     startTimer();
     createDashboard("gameDash");
     createPuzzlepieces();
+    setLanguage();
   });
 }
 
@@ -186,6 +181,29 @@ function createDashboard(dash) {
   console.log(dash);
 }
 
+async function profile(params) {
+  createDashboard("profileDash");
+
+  let response = await fetch("/getProfile", {
+    method: "GET",
+    headers: {
+      "content-type": "application.json",
+      authorization: "Bearer " + localStorage.getItem("token"),
+    },
+  });
+
+  let data = await response.json();
+  console.log(data);
+
+  const list = document.getElementById("listProfile");
+
+  data.forEach((element) => {
+    const instance = document.createElement("li");
+    instance.innerHTML = `${element.username}: ${element.score}`;
+    list.appendChild(instance);
+  });
+}
+
 function startTimer() {
   sec = 0;
   min = 0;
@@ -193,9 +211,6 @@ function startTimer() {
   timer = setInterval(start, 1000);
 
   function start() {
-    let secFinal;
-    let minFinal;
-
     if (min < 10) {
       minFinal = `0${min}`;
     } else {
@@ -222,10 +237,9 @@ function startTimer() {
 
 function stopTimer() {
   clearInterval(timer);
-  finishTime = `${min}:${sec}`;
+  finishTime = `${minFinal}:${secFinal}`;
   sec = 0;
   min = 0;
-  console.log(finishTime);
 }
 
 function createBasicAuthString(username, password) {
