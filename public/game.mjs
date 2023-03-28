@@ -80,8 +80,6 @@ function createPuzzlepieces() {
     blankImagePeaces.forEach((element) => {
       board.appendChild(element);
     });
-
-  
   };
 }
 
@@ -119,7 +117,6 @@ function actions(elm) {
     let otherImg = otherTile.src;
     currTile.src = otherImg;
     otherTile.src = currImg;
-    console.log("dragend");
   });
 }
 
