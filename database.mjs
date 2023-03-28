@@ -3,7 +3,6 @@ import pg from "pg";
 const url =
   "postgres://cffuzpghjtwtrb:22730d294f419c6db2018f712b7aee7ed90143c825fa1c449e4cb7f71e89aa11@ec2-34-251-233-253.eu-west-1.compute.amazonaws.com:5432/d36k4deoigdirj";
 
-
 class sqlActions {
   constructor() {
     this.client = null;
@@ -78,16 +77,14 @@ class sqlActions {
     await this.connectToDatabase();
     try {
       // Insert data into the users table
-      await this.client.query(
-        `DELETE FROM users WHERE username='${userName}'`
-      );
+      await this.client.query(`DELETE FROM users WHERE username='${userName}'`);
       await this.client.query(
         `DELETE FROM scorboard WHERE username='${userName}'`
       );
 
       this.client.end();
     } catch (error) {
-      return false
+      return false;
       console.error("Error executing query", error);
     }
   }
@@ -96,11 +93,9 @@ class sqlActions {
   async loginCheck(userName, userPass) {
     await this.connectToDatabase();
     try {
-      // Insert data into the users table
       let loginCheck = await this.client.query(
         `SELECT * FROM users WHERE username = '${userName}' AND password = '${userPass}'`
       );
-      //client.end();
 
       if (loginCheck.rows.length > 0) {
         console.log("Login successful");
@@ -120,10 +115,8 @@ class sqlActions {
   async submitScore(user, score) {
     await this.connectToDatabase();
     try {
-      // Insert data into the scoreboard table
       await this.client.query(
         `INSERT INTO scorboard (username, score) VALUES ('${user}', '${score}')`
-        //`INSERT INTO users (username , password) VALUES ('${score}')`
       );
       this.client.end();
     } catch (error) {

@@ -42,7 +42,4 @@ function decodeToken(token) {
   return username
 };
 
-
-
-//export default createToken;
 export {createToken, decodeToken}

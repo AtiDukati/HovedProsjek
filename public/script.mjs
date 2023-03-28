@@ -35,19 +35,18 @@ loginBtn.addEventListener(`click`, async () => {
   });
 
   if (response.status === 200) {
-    console.log("access granted");
     let data = await response.json();
     localStorage.setItem("token", data);
-    console.log(data);
 
     dashBoard();
     profile();
     loginResponse.innerHTML = "";
-    let loggedinAs = document.getElementById("name").innerHTML = `${username.value}`
-  }else{
+    let loggedinAs = (document.getElementById(
+      "name"
+    ).innerHTML = `${username.value}`);
+  } else {
     loginResponse.innerHTML = `${response.status}: Invalid username or password`;
   }
-  console.log(response.status);
 });
 
 //=============================REGISTER===========================================================
@@ -70,7 +69,6 @@ register.addEventListener(`click`, () => {
     });
 
     if (response.status === 200) {
-      console.log("New user created");
       window.location.reload();
     }
   });
@@ -79,7 +77,9 @@ register.addEventListener(`click`, () => {
 //=============================SUBMIT SCORE===========================================================
 function submitScoreScreen() {
   let score = (document.getElementById("score").innerHTML = finishTime);
-  let submitScoreBtn = document.getElementById("submitScoreBtn").addEventListener("click", async () => {
+  let submitScoreBtn = document
+    .getElementById("submitScoreBtn")
+    .addEventListener("click", async () => {
       let response = await fetch("/submitScore", {
         method: "POST",
         headers: {
@@ -92,8 +92,10 @@ function submitScoreScreen() {
       });
 
       if (response.status === 200) {
-        console.log("New score added");
-        //dashBoard();
+
+        let submitResponse = (document.getElementById(
+          "submitResponse"
+        ).innerHTML = " Score submitted");
       }
     });
 }
@@ -101,26 +103,21 @@ function submitScoreScreen() {
 async function setLanguage() {
   let response = await fetch(`/get${chosenLanguage}`);
   let data = await response.json();
-  console.log(data);
 
   for (let [id, text] of Object.entries(data)) {
     let element = document.getElementById(id);
 
-    console.log(element);
+
     if (element !== null) {
-      console.log(id);
       element.innerHTML = text;
     }
   }
 }
 
 async function dashBoard() {
-  
   const dashboardTemplate = document.getElementById("dashboard");
   const clone = dashboardTemplate.content.cloneNode(true);
   navbar.appendChild(clone);
-
-  
 
   createDashboard("profileDash");
 
@@ -145,30 +142,31 @@ async function dashBoard() {
     setLanguage();
   });
 
-  document.getElementById("highscoreBtn").addEventListener("click", async () => {
-    stopTimer();
-    createDashboard("highscoreDash");
-    
+  document
+    .getElementById("highscoreBtn")
+    .addEventListener("click", async () => {
+      stopTimer();
+      createDashboard("highscoreDash");
 
-    let response = await fetch("/scorboard", {
-      method: "GET",
-      headers: {
-        "content-type": "application.json",
-      },
+      let response = await fetch("/scorboard", {
+        method: "GET",
+        headers: {
+          "content-type": "application.json",
+        },
+      });
+
+      let data = await response.json();
+
+
+      const list = document.getElementById("listScorebord");
+
+      data.forEach((element) => {
+        const instance = document.createElement("li");
+        instance.innerHTML = `${element.username}: ${element.score}`;
+        list.appendChild(instance);
+      });
+      setLanguage();
     });
-
-    let data = await response.json();
-    console.log(data);
-
-    const list = document.getElementById("listScorebord");
-
-    data.forEach((element) => {
-      const instance = document.createElement("li");
-      instance.innerHTML = `${element.username}: ${element.score}`;
-      list.appendChild(instance);
-    });
-    setLanguage();
-  });
 
   document.getElementById("gameBtn").addEventListener("click", () => {
     finish = false;
@@ -177,31 +175,27 @@ async function dashBoard() {
     createPuzzlepieces();
     setLanguage();
   });
-//=======================================DELETE USER========================================================================
-  deleteUser = document.getElementById("deleteUser").addEventListener("click", async ()=>{
-
-    let response = await fetch("/deleteUser", {
-      method: "DELETE",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({
-        token: localStorage.getItem("token")
-      })
+  //=======================================DELETE USER========================================================================
+  deleteUser = document
+    .getElementById("deleteUser")
+    .addEventListener("click", async () => {
+      let response = await fetch("/deleteUser", {
+        method: "DELETE",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          token: localStorage.getItem("token"),
+        }),
+      });
     });
-
-    // let data = await response.json();
-    // console.log(data);
-  })
-
-};
+}
 
 function createDashboard(dash) {
   home.innerHTML = "";
   const dashboardTemplate = document.getElementById(dash);
   const clone = dashboardTemplate.content.cloneNode(true);
   home.appendChild(clone);
-  console.log(dash);
 }
 
 async function profile(params) {
@@ -216,7 +210,6 @@ async function profile(params) {
   });
 
   let data = await response.json();
-  console.log(data);
 
   const list = document.getElementById("listProfile");
 

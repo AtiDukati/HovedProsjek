@@ -9,7 +9,6 @@ function hash(sourceText) {
 }
 
 function hashToken(tokenString) {
-    console.log(tokenSecret);
   const hash = createHmac("sha256", tokenSecret).update(tokenString, "utf-8").digest("base64");
 
   return hash;
