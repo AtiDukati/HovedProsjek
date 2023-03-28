@@ -15,24 +15,6 @@ server.set("port", port);
 server.use(express.json());
 server.use(express.static("public"));
 
-// server.get("/getUserProfile/", (req, res, next) =>{
-
-// } );
-
-// server.get("/getJokeNo/:index", (req, res, next) => {
-//   const lang = TLanguage("No");
-//   const joke = new Joke(lang[0]).tellAJoke(req.params.index);
-
-//   res.json({ joke: joke, elements: lang[1] }).end();
-// });
-
-// server.get("/getJokeEn/:index", (req, res, next) => {
-//   const lang = TLanguage("En");
-//   const joke = new Joke(lang[0]).tellAJoke(req.params.index);
-
-//   res.json({ joke: joke, elements: lang[1] }).end();
-// });
-
 
 server.get("/getNo", async (req, res)=>{
 
@@ -51,7 +33,7 @@ server.get("/getEn", async (req, res)=>{
 
 
 })
-
+//=======================================LOGIN========================================================================
 server.post("/login", async (req, res) => {
   //let loginUser = new sqlActions().loginCheck(req.body.username, hash(req.body.password));
 
@@ -79,6 +61,22 @@ server.post("/login", async (req, res) => {
   //console.log(req.body);
 });
 
+//=======================================DELETE USER========================================================================
+server.delete("/deleteUser", async (req, res) => {
+
+  const username = decodeToken(req.body.token);
+
+  let dbActions = new sqlActions();
+  let deletedUser = await dbActions.deleteUser(username);
+  console.log(username);
+
+  // if (deletedUser) {
+  //   res.status(200).send("User deleted");
+  // } else {
+  //   res.status(404).send("User not found");
+  // }
+});
+
 server.post("/registerUser", async (req, res, next) => {
 
   let newUser = new sqlActions();
@@ -96,6 +94,7 @@ server.post("/registerUser", async (req, res, next) => {
     res.status(403).end();
   }
 });
+
 
 
 

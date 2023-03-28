@@ -4,8 +4,8 @@ let home = document.getElementById("home");
 let navbar = document.getElementById("navbar");
 let loginBtn = document.getElementById("loginBtn");
 let register = document.getElementById("register");
-let test = document.getElementById("test");
 let logout;
+let deleteUser;
 let no;
 let en;
 let chosenLanguage = "En";
@@ -24,6 +24,7 @@ localStorage.clear();
 loginBtn.addEventListener(`click`, async () => {
   let username = document.getElementById("username");
   let password = document.getElementById("password");
+  let loginResponse = document.getElementById("respons");
 
   let response = await fetch("/login", {
     method: "POST",
@@ -41,6 +42,10 @@ loginBtn.addEventListener(`click`, async () => {
 
     dashBoard();
     profile();
+    loginResponse.innerHTML = "";
+    let loggedinAs = document.getElementById("name").innerHTML = `${username.value}`
+  }else{
+    loginResponse.innerHTML = `${response.status}: Invalid username or password`;
   }
   console.log(response.status);
 });
@@ -74,9 +79,7 @@ register.addEventListener(`click`, () => {
 //=============================SUBMIT SCORE===========================================================
 function submitScoreScreen() {
   let score = (document.getElementById("score").innerHTML = finishTime);
-  let submitScoreBtn = document
-    .getElementById("submitScoreBtn")
-    .addEventListener("click", async () => {
+  let submitScoreBtn = document.getElementById("submitScoreBtn").addEventListener("click", async () => {
       let response = await fetch("/submitScore", {
         method: "POST",
         headers: {
@@ -112,9 +115,12 @@ async function setLanguage() {
 }
 
 async function dashBoard() {
+  
   const dashboardTemplate = document.getElementById("dashboard");
   const clone = dashboardTemplate.content.cloneNode(true);
   navbar.appendChild(clone);
+
+  
 
   createDashboard("profileDash");
 
@@ -171,7 +177,24 @@ async function dashBoard() {
     createPuzzlepieces();
     setLanguage();
   });
-}
+//=======================================DELETE USER========================================================================
+  deleteUser = document.getElementById("deleteUser").addEventListener("click", async ()=>{
+
+    let response = await fetch("/deleteUser", {
+      method: "DELETE",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        token: localStorage.getItem("token")
+      })
+    });
+
+    // let data = await response.json();
+    // console.log(data);
+  })
+
+};
 
 function createDashboard(dash) {
   home.innerHTML = "";

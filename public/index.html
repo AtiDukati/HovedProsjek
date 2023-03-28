@@ -8,7 +8,8 @@
     <title>Document</title>
   </head>
   <body>
-    <div id="main">
+
+    <main id="main">
       <nav id="navbar"></nav>
 
       <div id="home">
@@ -20,10 +21,10 @@
         <br />
         <button id="loginBtn" class="lang">Login</button>
         <br />
-        <p id="register" class="lang">Register</p>
-        <button id="test">Test</button>
+        <button id="register" class="lang">Register</button>
       </div>
-    </div>
+      <p id="respons"></p>
+    </main>
 
     <template id="registerDash">
       <label id="registerUsernameLabel" for="registerUsername" class="lang">Create username:</label>
@@ -42,6 +43,8 @@
       <button id="logOut" class="lang">Logout</button>
       <button id="no">No</button>
       <button id="en">EN</button>
+      <button id="deleteUser">Delete User</button>
+      <p id="logedinAs">Logged in as:</p><span id="name"></span>
     </template>
 
     <template id="profileDash">

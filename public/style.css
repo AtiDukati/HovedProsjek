@@ -55,6 +55,14 @@
     /* border: gray 0.5px solid; */
 }
 
+button {
+    cursor: pointer;
+}
+
+button:focus {
+    background-color: #76b7c1;
+  }
+
 
 
 
