@@ -1,4 +1,4 @@
-import createPuzzlepieces from "./image.mjs";
+import createPuzzlepieces from "./game.mjs";
 
 let home = document.getElementById("home");
 let navbar = document.getElementById("navbar");
